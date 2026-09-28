@@ -137,14 +137,14 @@ remote:  无（未创建，未 push，未连接 GitHub）
 
 ## 13. 建议通过 GitHub Releases 发布的文件
 
-- `dist/ETHAN-SuperApp-v0.1.15.apk`（本次发布基准版本）
-- 后续版本以 `scripts/build-apk.sh` 实际输出为准（当前脚本 VERSION_NAME=0.1.20 → `dist/ETHAN-SuperApp-v0.1.20.apk`）
+- `dist/ETHAN-SuperApp-v0.1.20.apk`（本次正式发布版本，与 `scripts/build-apk.sh` 的 `VERSION_NAME=0.1.20` 一致）
+- 历史版本 APK（v0.1.0 – v0.1.15 等）保留在 `dist/` 本地，按需自行发布
 - 建议 Release 附注中给出 APK 的 SHA256 校验值（构建脚本运行结束会自动打印）。
 
 ## 14. 仍需要人工确认的项目
 
 1. **开源许可证**：未指定，需作者选择（MIT / Apache-2.0 / GPL-3.0 等）后添加 LICENSE 文件。
-2. **版本号差异**：作者指定本次发布为 v0.1.15，但 `scripts/build-apk.sh` 当前 `VERSION_NAME="0.1.20"`（versionCode 21），dist 中两者 APK 均存在。请确认以哪个版本作为首次 GitHub Release（当前未修改任何版本号）。
+2. **版本号差异 — 已确认（2026-09-28）**：正式发布版本统一为 **v0.1.20**（versionCode 21），README 与本报告发布建议已同步更新；`docs/FINAL-TECH-REPORT.md`、`docs/TRAVEL-WIDGET-STRESS-TEST.md` 中的 v0.1.15 为历史验收/测试记录，保留不改；Git 历史 commit message 不重写。
 3. **提交身份**：仓库本地身份为 `Ethan <ethan@users.noreply.github.com>` 占位邮箱，连接 GitHub 前可按需修改（`git commit --amend --reset-author` 或更新 config）。
 4. **keystore 备份**：`android/keystore/superapp.jks` 不入仓库（正确做法），请确认已在仓库之外妥善备份；丢失将无法为同一应用签名升级。
 5. **docs 报告中的本机路径**：`docs/AUDIT.md`、`docs/FINAL-TECH-REPORT.md` 含 `D:\workbuddy\...` 本地路径（无凭据），如介意可编辑后重新提交。

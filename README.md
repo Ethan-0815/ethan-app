@@ -120,8 +120,8 @@ node tools/responsive.mjs 8923           # 6 视口响应式
 
 ## 当前版本
 
-- **本次发布基准：v0.1.15**（versionCode 16 时期的验收版本，见 `docs/FINAL-TECH-REPORT.md`）。
-- 注意：`scripts/build-apk.sh` 中的 `VERSION_NAME` 目前为 `0.1.20`（versionCode 21），构建产物版本以脚本实际输出为准；`dist/` 目录内含 v0.1.0 – v0.1.20 的历史 APK（均不入仓库）。
+- **当前正式版本：v0.1.20**（versionCode 21），与 `scripts/build-apk.sh` 中的 `VERSION_NAME` 一致，构建产物为 `dist/ETHAN-SuperApp-v0.1.20.apk`。
+- `dist/` 目录内含 v0.1.0 – v0.1.20 的历史 APK（均不入仓库）；v0.1.15 为上一验收版本（见 `docs/FINAL-TECH-REPORT.md`）。
 
 ## 已知限制
 
