@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ethan</string>
+    <string name="choose_file">选择文件</string>
+    <string name="no_file_picker">无法打开文件选择器</string>
+</resources>

@@ -1,0 +1,692 @@
+[
+  {
+    "stage": "首次启动",
+    "name": "首次启动显示锁定屏",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "首次启动",
+    "name": "提示设置 PIN",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "设置 PIN",
+    "name": "进入确认步骤",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "设置 PIN",
+    "name": "设置 PIN 后进入首页",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "设置 PIN",
+    "name": "首页显示 ETHAN",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "设置 PIN",
+    "name": "空状态可见",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "创建账号密码",
+    "name": "弹出新建菜单",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "创建账号密码",
+    "name": "打开新建账号表单",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "创建账号密码",
+    "name": "密码生成器产出密码",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "创建账号密码",
+    "name": "生成器使用安全随机",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "创建账号密码",
+    "name": "生成的密码已填入",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "创建账号密码",
+    "name": "标签已添加",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "创建账号密码",
+    "name": "保存后进入详情页",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "查看与复制",
+    "name": "密码默认隐藏",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "查看与复制",
+    "name": "详情页无明文密码",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "查看与复制",
+    "name": "点击眼睛后显示密码",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "查看与复制",
+    "name": "复制给出反馈",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "查看与复制",
+    "name": "剪贴板内容正确（headless 无法读取，跳过）",
+    "pass": true,
+    "extra": "skipped"
+  },
+  {
+    "stage": "备用验证码",
+    "name": "可添加备用验证码",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "备用验证码",
+    "name": "备用验证码已保存",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "修改",
+    "name": "修改标题生效",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "密钥 / Token",
+    "name": "创建 API Key",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "密钥 / Token",
+    "name": "创建 Access Token",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "文本",
+    "name": "创建文本",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "其他",
+    "name": "字段可标记为敏感（输入变为隐藏态）",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "其他",
+    "name": "创建其他",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "其他",
+    "name": "敏感字段默认隐藏",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "搜索与筛选",
+    "name": "搜索命中标题",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "搜索与筛选",
+    "name": "搜索结果不显示密码",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "搜索与筛选",
+    "name": "搜索命中用户名",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "搜索与筛选",
+    "name": "无结果显示空状态",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "搜索与筛选",
+    "name": "搜索态顶栏可返回",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "搜索与筛选",
+    "name": "退出搜索后恢复普通顶栏",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "搜索与筛选",
+    "name": "分类筛选：密钥",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "首页搜索",
+    "name": "首页顶栏显示品牌与副标题",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "首页搜索",
+    "name": "首页搜索进入搜索态",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "首页搜索",
+    "name": "搜索可返回首页",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "首页",
+    "name": "首页分类数量为真实计算",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "首页",
+    "name": "首页显示最近使用",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "回收站",
+    "name": "详情页有编辑入口",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "回收站",
+    "name": "删除需二次确认",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "回收站",
+    "name": "删除后进入回收站",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "回收站",
+    "name": "回收站可打开",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "回收站",
+    "name": "回收站显示条目",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "回收站",
+    "name": "恢复成功",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "回收站",
+    "name": "永久删除二次确认",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "回收站",
+    "name": "永久删除生效",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "锁定与解锁",
+    "name": "立即锁定回到锁定屏",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "锁定与解锁",
+    "name": "锁定后无法读取敏感数据",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "锁定与解锁",
+    "name": "错误 PIN 提示",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "锁定与解锁",
+    "name": "重新解锁成功",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "锁定与解锁",
+    "name": "解锁后数据仍在",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "浏览器刷新",
+    "name": "刷新后回到锁定屏",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "浏览器刷新",
+    "name": "刷新后未解锁不能读数据",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "浏览器刷新",
+    "name": "刷新后数据未丢失",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "浏览器刷新",
+    "name": "刷新后密码可解密",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "修改 PIN",
+    "name": "PIN 修改成功",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "修改 PIN",
+    "name": "旧 PIN 失效",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "修改 PIN",
+    "name": "改 PIN 后数据仍可解密",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "加密备份",
+    "name": "备份文件已下载",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "加密备份",
+    "name": "备份文件名格式",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "加密备份",
+    "name": "备份内容为密文，不含明文密码",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "加密备份",
+    "name": "备份密码错误时拒绝",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "清空与恢复",
+    "name": "数据已清空",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "清空与恢复",
+    "name": "已选择备份文件",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "清空与恢复",
+    "name": "错误备份密码有提示",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "清空与恢复",
+    "name": "恢复前显示备份统计",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "清空与恢复",
+    "name": "默认合并策略",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "清空与恢复",
+    "name": "恢复后数量一致",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "清空与恢复",
+    "name": "恢复后内容完整",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "离线",
+    "name": "离线：首页可用",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "离线",
+    "name": "离线：新建弹窗可用",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "离线",
+    "name": "离线：密码生成器可用",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "离线",
+    "name": "离线：可保存",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "离线",
+    "name": "离线：可查看",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "离线",
+    "name": "离线：可复制",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "离线",
+    "name": "离线：搜索可用",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "离线",
+    "name": "离线：回收站可用",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "离线",
+    "name": "离线：加密备份可用",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "离线",
+    "name": "离线：加密恢复可用",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "响应式",
+    "name": "响应式 320px 无横向滚动",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "响应式",
+    "name": "响应式 320px 导航不遮挡内容",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "响应式",
+    "name": "响应式 375px 无横向滚动",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "响应式",
+    "name": "响应式 375px 导航不遮挡内容",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "响应式",
+    "name": "响应式 390px 无横向滚动",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "响应式",
+    "name": "响应式 390px 导航不遮挡内容",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "响应式",
+    "name": "响应式 430px 无横向滚动",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "响应式",
+    "name": "响应式 430px 导航不遮挡内容",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "响应式",
+    "name": "响应式 768px 无横向滚动",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "响应式",
+    "name": "响应式 768px 导航不遮挡内容",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "响应式",
+    "name": "响应式 1280px 无横向滚动",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "响应式",
+    "name": "响应式 1280px 导航不遮挡内容",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "响应式",
+    "name": "横屏 740x360 无横向滚动",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "响应式",
+    "name": "横屏底部导航完整可见",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "长内容与边界",
+    "name": "超长内容不导致横向滚动",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "长内容与边界",
+    "name": "超长标题以省略号处理",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "自动锁定",
+    "name": "自动锁定选项可打开",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "自动锁定",
+    "name": "自动锁定可修改",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "大量数据",
+    "name": "60 条数据：无横向溢出",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "大量数据",
+    "name": "60 条数据：列表可滚动",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "大量数据",
+    "name": "60 条数据：不泄露密码",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "大量数据",
+    "name": "批量清理完成",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "外观主题",
+    "name": "设置页有主题入口（默认跟随系统）",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "外观主题",
+    "name": "主题提供三种模式",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "外观主题",
+    "name": "可切换到深色模式",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "外观主题",
+    "name": "深色模式无横向溢出",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "外观主题",
+    "name": "深色模式首页仍可用",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "外观主题",
+    "name": "可切换回浅色模式",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "外观主题",
+    "name": "跟随系统：系统深色 → 深色",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "外观主题",
+    "name": "跟随系统：系统浅色 → 浅色",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "外观主题",
+    "name": "刷新后主题偏好保持",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "外观主题",
+    "name": "恢复浅色模式",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "网络与控制台",
+    "name": "无外部网络请求",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "网络与控制台",
+    "name": "无页面异常",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "stage": "网络与控制台",
+    "name": "无控制台错误",
+    "pass": true,
+    "extra": ""
+  }
+]

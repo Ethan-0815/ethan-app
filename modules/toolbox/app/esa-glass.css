@@ -1,0 +1,25 @@
+/* ==========================================================================
+   ETHAN Super App · 整合层样式（toolbox）
+   只包含返回键统一样式（32px 圆形外框，全生态一致）。
+   ========================================================================== */
+
+.topbar__icon-btn--back,
+.esa-back-btn {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-1);
+  transition: transform 0.15s ease;
+}
+.topbar__icon-btn--back:active,
+.esa-back-btn:active { transform: scale(0.9); }
+
+/* 首页标题行的返回键与标题间距 */
+.homehead__row .esa-back-btn { margin-right: 2px; }

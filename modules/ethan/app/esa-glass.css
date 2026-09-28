@@ -1,0 +1,41 @@
+/* ==========================================================================
+   ETHAN Super App · 整合层样式（ethan）
+   只包含返回键统一样式（32px 圆形外框，全生态一致）。
+   ========================================================================== */
+
+.esa-back-btn,
+.panel .iconbtn[data-act='back'] {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  transition: transform 0.15s ease;
+}
+.esa-back-btn:active,
+.panel .iconbtn[data-act='back']:active { transform: scale(0.9); }
+
+/* 深色模式下底部导航滑动指示块：加深描边，保证与浅色一致的可感知滑动 */
+html[data-theme='dark'] .tab__ind {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.09),
+    0 1px 5px rgba(0, 0, 0, 0.45);
+}
+
+/* 顶栏返回键与品牌的间距 */
+.topbar .esa-back-btn { margin-right: 12px; }
+
+/* 锁定屏左上角返回（绝对定位，不干扰 PIN 键盘） */
+#lock .esa-back-btn {
+  position: absolute;
+  top: calc(env(safe-area-inset-top, 0px) + 14px);
+  left: 16px;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.07);
+}

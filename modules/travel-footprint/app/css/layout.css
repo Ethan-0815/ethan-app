@@ -1,0 +1,1826 @@
+/* ==========================================================================
+   Travel Footprint — layout.css
+   App shell, page stacks, screen transitions, and per-page layout.
+
+   Class names here mirror the markup produced by app/js/ui/pages/*.js and
+   app/js/ui/parts.js. Keep the two in sync — tools/audit-css.mjs reports drift.
+   Loaded after base.css + components.css.
+   ========================================================================== */
+
+/* --------------------------------------------------------------- shell --- */
+
+#app {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* The page host. Every page is an absolutely-positioned .screen inside it, so
+   each screen owns its own scroll position and transitions can overlap. */
+#viewport {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* ------------------------------------------------------------- screens --- */
+
+.screen {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;              /* inner .scroll does the scrolling */
+  background: var(--bg);
+  opacity: 0;
+  transform: translate3d(0, 0, 0);
+  will-change: opacity, transform;
+}
+
+.screen--visible {
+  opacity: 1;
+}
+
+/* Tab roots swap instantly — animating between peer tabs reads as lag. */
+.screen--root.screen--visible {
+  transform: none;
+  transition: none;
+}
+
+.screen--enter-tab {
+  animation: tf-fade 240ms var(--ease-out) both;
+}
+
+/* A pushed page arrives from clearly below, slightly smaller — visible at a
+   glance (the old 14px drift read as "no animation"). */
+.screen--pushing {
+  opacity: 0;
+  transform: translate3d(0, 48px, 0) scale(0.972);
+}
+
+.screen--pushing.screen--visible {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 280ms var(--ease-out),
+    transform 320ms var(--ease-out);
+}
+
+/* The page underneath during a push: recedes, dims, then parks. */
+.screen--leaving {
+  opacity: 1;
+  transform: translate3d(0, -12px, 0) scale(0.962);
+  transition:
+    opacity 200ms var(--ease-out),
+    transform 240ms var(--ease-out);
+}
+
+.screen--behind {
+  opacity: 0;
+  transform: translate3d(0, -8px, 0) scale(0.988);
+  pointer-events: none;
+  transition: none;
+}
+
+/* A popped page drops away downward and fades. */
+.screen--popping {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0) scale(0.992);
+  pointer-events: none;
+  transition:
+    opacity 190ms var(--ease-in),
+    transform 210ms var(--ease-in);
+}
+
+/* ------------------------------------------------------------- scroller --- */
+
+/* A screen is a flex column: a fixed header, then a scroll region that takes
+   the remaining height. Nothing is absolutely positioned, so a header can
+   never be covered by its own list. */
+.screen-home,
+.screen-timeline,
+.screen-cities,
+.screen-city,
+.screen-bin {
+  display: flex;
+  flex-direction: column;
+}
+
+.home-scroll,
+.tl-scroll,
+.cities-scroll,
+.city-scroll,
+.map-scroll,
+.bin-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  padding: 0 var(--gutter);
+  /* clear the floating nav so the last card is never hidden behind it */
+  padding-bottom: calc(var(--nav-h) + var(--safe-b) + 56px);
+  scrollbar-width: thin;
+  scrollbar-color: var(--sand-4) transparent;
+}
+
+.map-scroll {
+  padding-bottom: calc(var(--nav-h) + var(--safe-b) + 26px);
+}
+
+/* pushed pages have no nav bar underneath them */
+.city-scroll,
+.bin-scroll {
+  padding-bottom: calc(var(--safe-b) + 44px);
+}
+
+.home-scroll::-webkit-scrollbar,
+.tl-scroll::-webkit-scrollbar,
+.cities-scroll::-webkit-scrollbar,
+.city-scroll::-webkit-scrollbar,
+.map-scroll::-webkit-scrollbar,
+.bin-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+.home-scroll::-webkit-scrollbar-thumb,
+.tl-scroll::-webkit-scrollbar-thumb,
+.cities-scroll::-webkit-scrollbar-thumb,
+.city-scroll::-webkit-scrollbar-thumb,
+.map-scroll::-webkit-scrollbar-thumb,
+.bin-scroll::-webkit-scrollbar-thumb {
+  background: var(--sand-3);
+  border-radius: 3px;
+}
+
+/* On wide screens keep the reading column comfortable. */
+@media (min-width: 780px) {
+  .home-scroll,
+  .tl-scroll,
+  .cities-scroll,
+  .city-scroll,
+  .map-scroll,
+  .bin-scroll,
+  .screen-timeline > .tl-header,
+  .screen-cities > .cities-header,
+  .screen-cities > .cities-toolbar,
+  .screen-city > .city-head {
+    max-width: var(--maxw);
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .map-scroll {
+    max-width: 900px;
+  }
+}
+
+/* ----------------------------------------------------------- sections --- */
+
+.home-section {
+  margin-top: 32px;
+}
+
+.home-section--stats {
+  margin-top: 0;
+}
+
+.home-section--tools {
+  margin-top: 38px;
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.section-head__title {
+  font-size: 15.5px;
+  font-weight: 650;
+  letter-spacing: 0.005em;
+  color: var(--ink-0);
+}
+
+.section-head__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 4px 0;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--accent-0);
+  cursor: pointer;
+}
+
+.section-head__action .icon {
+  transform: translateY(0.5px);
+}
+
+/* ============================================================ HOME ====== */
+
+.home-hero {
+  padding-top: calc(var(--safe-t) + 30px);
+}
+
+.home-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent-0);
+}
+
+.home-hero__mark {
+  display: inline-flex;
+  color: var(--accent-0);
+}
+
+.home-hero__tagline {
+  margin-top: 9px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-3);
+}
+
+.home-hero__actions {
+  margin-top: 22px;
+  display: flex;
+}
+
+.home-hero__actions .btn {
+  flex: 0 0 auto;
+}
+
+/* ---- the headline number: the visual centre of the whole app ---- */
+
+.hero-stat {
+  margin-top: 34px;
+}
+
+.hero-stat__primary {
+  display: flex;
+  align-items: flex-end;
+  gap: 11px;
+}
+
+.hero-stat__number {
+  display: block;
+  font-family: var(--font-num);
+  font-size: clamp(68px, 22vw, 104px);
+  font-weight: 700;
+  line-height: 0.84;
+  letter-spacing: -0.05em;
+  color: var(--ink-0);
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-stat__unit {
+  padding-bottom: 9px;
+  font-size: 15px;
+  font-weight: 620;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+.home-substats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 26px;
+  margin-top: 24px;
+}
+
+.substat {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.substat__num {
+  font-family: var(--font-num);
+  font-size: 17px;
+  font-weight: 680;
+  letter-spacing: -0.02em;
+  color: var(--ink-0);
+  font-variant-numeric: tabular-nums;
+}
+
+.substat__unit {
+  font-size: 12.5px;
+  color: var(--ink-3);
+}
+
+/* ---- map teaser ---- */
+
+.home-map {
+  display: block;
+  width: 100%;
+  appearance: none;
+  border: 1px solid var(--line);
+  background: linear-gradient(160deg, #eef1f6 0%, #e4e9f0 100%);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-1);
+  padding: 14px 16px 12px;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.home-map svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.home-map__labels {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.home-map__label {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: var(--r-full);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  font-size: 12px;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+.home-map__more {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: var(--r-full);
+  background: var(--accent-wash);
+  color: var(--accent-0);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.mini-map {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* land silhouettes inside the home mini map */
+.mini-map__land {
+  fill: #ffffff;
+  stroke: #b6bec8;
+  stroke-width: 1;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 1px 1.5px rgba(22, 24, 28, 0.10));
+}
+
+.mini-map__land--small {
+  stroke-width: 0.8;
+}
+
+/* detailed China outline layered over the coarse world silhouette */
+.mini-map__land--china {
+  stroke: #a5b0bb;
+  stroke-width: 1.1;
+}
+
+.mini-map__land--tiny {
+  stroke-width: 0.6;
+}
+
+/* dotted traditional island-line (South China Sea) */
+.mini-map__dash {
+  stroke: var(--ink-4);
+  stroke-width: 0.9;
+  stroke-dasharray: 4 3;
+  opacity: 0.65;
+}
+
+.mini-map__path {
+  fill: none;
+  stroke: var(--accent-0);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.62;
+}
+
+.mini-map__halo {
+  fill: var(--accent-2);
+  opacity: 0.32;
+}
+
+.mini-map__core {
+  fill: var(--accent-0);
+  stroke: var(--paper);
+  stroke-width: 1.6;
+}
+
+.mini-map__hint {
+  fill: var(--ink-4);
+  font-family: var(--font);
+  font-size: 11px;
+}
+
+/* ---- recent trips (ticket stubs) ---- */
+
+.home-recent {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ---- footer ---- */
+
+.home-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 42px;
+  padding-bottom: 4px;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+
+.home-footer__brand {
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.home-footer__version {
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+/* ============================================================ MAP ======= */
+
+/* The map screen is a fixed-height layout (header + canvas), not a scrolling
+   list, so the map always fills whatever space is left above the nav. */
+.screen-map--fixed {
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--gutter);
+  padding-bottom: calc(var(--nav-h) + var(--safe-b) + 12px);
+}
+
+.screen-map--fixed > .map-header {
+  flex: 0 0 auto;
+}
+
+/* the map keeps a landscape-ish shape and is centred in whatever height is
+   left over, so it never stretches into a tall skinny box */
+.screen-map--fixed .map-canvas {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4px 0;
+}
+
+.screen-map--fixed .map-viewport {
+  /* Fill the leftover height, but never let the box get so tall that the map
+     turns into a narrow strip: the aspect ratio sets a floor on width-per-height
+     and `max-height` keeps it on screen. */
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+  aspect-ratio: auto;
+  max-height: 100%;
+  margin: 0 auto;
+}
+
+.screen-map--fixed .map-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* controls float over the canvas, clear of the nav */
+.screen-map--fixed > .map-controls {
+  position: absolute;
+  right: calc(var(--gutter) + 10px);
+  /* sit just above the floating nav so they read as part of the map card */
+  bottom: calc(var(--nav-h) + var(--safe-b) + 30px);
+  z-index: 5;
+}
+
+@media (min-width: 780px) {
+  .screen-map--fixed {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .screen-map--fixed > .map-controls {
+    right: calc(50% - 450px + var(--gutter) + 10px);
+  }
+}
+
+.map-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding-top: calc(var(--safe-t) + 26px);
+  padding-bottom: 16px;
+}
+
+.map-header__text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.map-header__title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink-0);
+}
+
+.map-header__sub {
+  margin-top: 5px;
+  font-size: 13px;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.map-count__num {
+  font-weight: 680;
+  color: var(--ink-1);
+}
+
+.map-header__toggle {
+  display: inline-flex;
+  flex: 0 0 auto;
+  padding: 3px;
+  border-radius: var(--r-full);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+}
+
+.map-mode {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0 13px;
+  height: 28px;
+  border-radius: var(--r-full);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-3);
+  cursor: pointer;
+  transition: background 200ms var(--ease-out), color 200ms var(--ease-out);
+}
+
+.map-mode.is-active {
+  background: var(--paper);
+  color: var(--ink-0);
+  box-shadow: var(--sh-0);
+}
+
+.map-canvas {
+  position: relative;
+}
+
+.map-viewport {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1000 / 620;
+  max-height: 100%;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: linear-gradient(165deg, #e9edf3 0%, #dfe5ec 100%);
+  border: 1px solid var(--line);
+  box-shadow: var(--sh-1);
+  touch-action: none;
+  cursor: grab;
+}
+
+.map-viewport.is-dragging {
+  cursor: grabbing;
+}
+
+.map-stage {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.map-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: transform 90ms linear;
+  transform-origin: 0 0;
+}
+
+/* China / the active landmass: this is the shape the user is reading, so it
+   gets real contrast against the sea-grey background. */
+.map-land--primary {
+  fill: #ffffff;
+  stroke: #c2c9d1;
+  stroke-width: 1.2;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 1px 2px rgba(22, 24, 28, 0.10));
+}
+
+/* Neighbouring landmasses: present for context, deliberately recessive. */
+.map-land--context {
+  fill: #e2e7ec;
+  stroke: #d2d8de;
+  stroke-width: 0.7;
+  opacity: 0.9;
+  vector-effect: non-scaling-stroke;
+}
+
+.map-land--island {
+  fill: #ffffff;
+  stroke: #c2c9d1;
+  stroke-width: 0.9;
+  vector-effect: non-scaling-stroke;
+}
+
+.map-guide {
+  fill: none;
+  stroke: #ccd3da;
+  stroke-width: 0.6;
+  stroke-dasharray: 3 4;
+  opacity: 0.8;
+}
+
+/* the traditional island-line in the South China Sea reads slightly stronger */
+.map-guide--island-line {
+  stroke: var(--ink-4);
+  stroke-width: 0.9;
+  opacity: 0.65;
+}
+
+/* ---- dark theme: the same map, night-ocean palette ---- */
+html[data-theme="dark"] .map-viewport {
+  background: linear-gradient(165deg, #151a21, #10151b);
+}
+html[data-theme="dark"] .map-land--primary {
+  fill: #2b333e;
+  stroke: #4a5563;
+}
+html[data-theme="dark"] .map-land--context {
+  fill: #1e242c;
+  stroke: #29303a;
+}
+html[data-theme="dark"] .map-land--island {
+  fill: #2b333e;
+  stroke: #4a5563;
+}
+html[data-theme="dark"] .map-guide {
+  stroke: #3a434f;
+}
+html[data-theme="dark"] .map-guide--island-line {
+  stroke: var(--ink-3);
+}
+html[data-theme="dark"] .home-map {
+  background: linear-gradient(160deg, #171c24, #12171e);
+}
+html[data-theme="dark"] .mini-map__land {
+  fill: #2b333e;
+  stroke: #47525f;
+  filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, 0.45));
+}
+html[data-theme="dark"] .mini-map__land--china {
+  stroke: #566472;
+}
+html[data-theme="dark"] .mini-map__dash {
+  stroke: var(--ink-3);
+}
+
+.map-route {
+  fill: none;
+  stroke: var(--accent-0);
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  opacity: 0.5;
+  stroke-dasharray: 4 5;
+}
+
+.map-route-shadow {
+  fill: none;
+  stroke: var(--paper);
+  stroke-width: 3;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  opacity: 0.9;
+}
+
+.map-dot {
+  cursor: pointer;
+  outline: none;
+}
+
+.map-dot__halo {
+  fill: var(--accent-2);
+  opacity: 0.3;
+  transition: opacity 200ms var(--ease-out), r 200ms var(--ease-out);
+}
+
+.map-dot__core {
+  fill: var(--accent-0);
+  stroke: var(--paper);
+  stroke-width: 1.4;
+}
+
+.map-dot__count {
+  fill: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 5.6px;
+  font-weight: 700;
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+.map-dot.is-selected .map-dot__halo,
+.map-dot:hover .map-dot__halo {
+  opacity: 0.55;
+}
+
+.map-dot.is-selected .map-dot__core {
+  fill: var(--ink-0);
+}
+
+.map-controls {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.map-ctrl {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  border: 1px solid var(--line);
+  background: var(--glass-bg-strong, rgba(255, 255, 255, 0.88));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--ink-1);
+  box-shadow: var(--sh-1);
+  cursor: pointer;
+}
+
+.map-ctrl:active {
+  transform: scale(0.94);
+}
+
+.map-zoom__label {
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.map-popover {
+  position: absolute;
+  z-index: 6;
+  min-width: 176px;
+  max-width: 240px;
+  pointer-events: none;
+}
+
+.map-popover[hidden] {
+  display: none;
+}
+
+.map-popover__card {
+  padding: 13px 15px 12px;
+  border-radius: var(--r-md);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  box-shadow: var(--sh-2);
+  pointer-events: auto;
+}
+
+.map-popover__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.map-popover__name {
+  font-size: 16px;
+  font-weight: 680;
+  letter-spacing: -0.01em;
+  color: var(--ink-0);
+}
+
+.map-popover__visits {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--accent-0);
+  white-space: nowrap;
+}
+
+.map-popover__geo {
+  margin-top: 3px;
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.map-popover__meta {
+  margin-top: 9px;
+}
+
+.map-popover__when {
+  font-size: 12px;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.map-popover__go {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 10px;
+  padding: 0;
+  appearance: none;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 640;
+  color: var(--accent-0);
+  cursor: pointer;
+}
+
+/* ========================================================= TIMELINE ===== */
+
+.tl-header {
+  flex: 0 0 auto;
+  padding: calc(var(--safe-t) + 26px) var(--gutter) 18px;
+}
+
+.tl-header__title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink-0);
+}
+
+.tl-header__sub {
+  margin-top: 5px;
+  font-size: 13px;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The year is its own header row; months and entries follow as siblings, so
+   the rail has to live on the scroller, not on .tl-year. */
+.tl-year {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 36px;
+}
+
+.tl-year__rail {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.tl-year__label {
+  position: relative;
+  font-family: var(--font-num);
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--ink-0);
+  font-variant-numeric: tabular-nums;
+}
+
+/* the small node that marks the year on the rail */
+.tl-year__label::before {
+  content: '';
+  position: absolute;
+  left: -22px;
+  top: 50%;
+  width: 11px;
+  height: 11px;
+  margin-top: -5.5px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--accent-0);
+  box-sizing: border-box;
+}
+
+.tl-month {
+  position: relative;
+  margin-top: 24px;
+  padding-left: 22px;
+}
+
+/* continuous rail through the month blocks */
+.tl-month::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: -24px;
+  bottom: -18px;
+  width: 1px;
+  background: var(--line);
+}
+
+.tl-month:last-of-type::before {
+  bottom: 0;
+}
+
+.tl-month__head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.tl-month__badge {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 9px;
+  border-radius: 7px;
+  background: var(--surface-2);
+  color: var(--ink-2);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+}
+
+.tl-month__name {
+  font-size: 12.5px;
+  color: var(--ink-3);
+}
+
+.tl-month__count {
+  margin-left: auto;
+  font-size: 11.5px;
+  color: var(--ink-4);
+  font-variant-numeric: tabular-nums;
+}
+
+.tl-list {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ---- a single timeline entry ---- */
+
+.tl-item {
+  position: relative;
+  padding-left: 22px;
+  margin-top: 12px;
+}
+
+/* rail segment behind each entry, so the line runs the full column */
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: -12px;
+  bottom: -12px;
+  width: 1px;
+  background: var(--line);
+}
+
+.tl-item__marker {
+  position: absolute;
+  left: 0;
+  top: 20px;
+  width: 11px;
+  display: flex;
+  justify-content: center;
+}
+
+.tl-item__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent-0);
+  box-shadow: 0 0 0 3px var(--bg);
+  z-index: 1;
+}
+
+.tl-item__stem {
+  display: none;
+}
+
+.tl-item__card {
+  padding: 15px var(--pad-card) 14px;
+  border-radius: var(--r-md);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  box-shadow: var(--sh-0);
+  cursor: pointer;
+  transition: box-shadow 200ms var(--ease-out), transform 160ms var(--ease-out);
+}
+
+.tl-item__card:active {
+  transform: scale(0.988);
+}
+
+.tl-item__top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tl-item__city {
+  font-size: 16.5px;
+  font-weight: 680;
+  letter-spacing: -0.012em;
+  color: var(--ink-0);
+}
+
+.tl-item__range {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.tl-item__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.tl-item__days {
+  color: var(--ink-2);
+  font-weight: 550;
+}
+
+.tl-item__sep {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--ink-5);
+}
+
+.tl-item__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.tl-item__note {
+  margin-top: 10px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-1);
+}
+
+.tl-item__thumbs {
+  display: flex;
+  gap: 6px;
+  margin-top: 11px;
+  overflow: hidden;
+}
+
+.tl-item__thumb {
+  width: 46px;
+  height: 46px;
+  border-radius: 9px;
+  object-fit: cover;
+  background: var(--surface-2);
+  flex: 0 0 auto;
+}
+
+.tl-end {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 40px 0 6px;
+}
+
+.tl-end__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sand-3);
+}
+
+.tl-end__text {
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  color: var(--ink-4);
+}
+
+/* =========================================================== CITIES ===== */
+
+.cities-header {
+  flex: 0 0 auto;
+  padding: calc(var(--safe-t) + 26px) var(--gutter) 0;
+}
+
+.cities-header__row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.cities-header__title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink-0);
+}
+
+.cities-header__sub {
+  margin-top: 5px;
+  font-size: 13px;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.cities-header__add {
+  flex: 0 0 auto;
+}
+
+.cities-toolbar {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 18px var(--gutter) 12px;
+}
+
+.cities-search {
+  position: relative;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.cities-search__icon {
+  position: absolute;
+  left: 13px;
+  display: inline-flex;
+  color: var(--ink-4);
+  pointer-events: none;
+}
+
+.cities-search__input {
+  width: 100%;
+  height: 42px;
+  padding: 0 38px 0 38px;
+  border-radius: var(--r-full);
+  border: 1px solid var(--line);
+  background: var(--paper);
+  font-size: 14px;
+  color: var(--ink-0);
+  transition: border-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out);
+}
+
+.cities-search__input::placeholder {
+  color: var(--ink-4);
+}
+
+.cities-search__input:focus {
+  outline: none;
+  border-color: var(--accent-2);
+  box-shadow: 0 0 0 3px var(--accent-wash);
+}
+
+.cities-search__clear {
+  position: absolute;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 0;
+  background: var(--surface-2);
+  color: var(--ink-3);
+  cursor: pointer;
+}
+
+.cities-sort {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 42px;
+  padding: 0 14px;
+  border-radius: var(--r-full);
+  border: 1px solid var(--line);
+  background: var(--paper);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-2);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.cities-sort__label {
+  font-variant-numeric: tabular-nums;
+}
+
+.cities-list {
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.cities-list__group {
+  /* 分组间距由 .cities-list 的 gap 统一控制（此前 margin-top 与 gap 叠加出 58px 空白） */
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cities-list__group:first-child {
+  margin-top: 0;
+}
+
+.cities-list__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 640;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 11px;
+}
+
+/* the "city card" is shared with parts.js */
+
+.city-card {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 14px var(--pad-card);
+  border-radius: var(--r-md);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  box-shadow: var(--sh-0);
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: box-shadow 200ms var(--ease-out), transform 160ms var(--ease-out);
+}
+
+.city-card:active {
+  transform: scale(0.99);
+}
+
+.city-card__initial {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 13px;
+  background: var(--accent-wash);
+  color: var(--accent-0);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.city-card__info {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.city-card__name {
+  font-size: 15.5px;
+  font-weight: 640;
+  letter-spacing: -0.01em;
+  color: var(--ink-0);
+}
+
+.city-card__geo {
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.city-card__date {
+  margin-top: 4px;
+  font-size: 11.5px;
+  color: var(--ink-4);
+  font-variant-numeric: tabular-nums;
+}
+
+.city-card__side {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--ink-4);
+}
+
+.city-card__visits {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-2);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.city-card__visits--none {
+  color: var(--ink-4);
+  font-weight: 500;
+}
+
+.city-card__chev {
+  display: inline-flex;
+  color: var(--ink-4);
+}
+
+/* ============================================================= CITY ===== */
+
+.city-head {
+  flex: 0 0 auto;
+  padding: calc(var(--safe-t) + 6px) var(--gutter) 0;
+}
+
+.city-head__topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 0;
+}
+
+.city-head__actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.city-head__main {
+  margin-top: 14px;
+}
+
+.city-head__name {
+  font-family: var(--font-num);
+  font-size: clamp(34px, 10vw, 44px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+  color: var(--ink-0);
+}
+
+.city-head__geo {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--ink-3);
+}
+
+.city-head__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.city-stat {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  padding: 7px 13px;
+  border-radius: var(--r-full);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  box-shadow: var(--sh-0);
+}
+
+.city-stat--accent {
+  background: var(--accent-wash);
+  border-color: transparent;
+}
+
+.city-stat__num {
+  font-family: var(--font-num);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink-0);
+  font-variant-numeric: tabular-nums;
+}
+
+.city-stat--accent .city-stat__num {
+  color: var(--accent-0);
+}
+
+.city-stat__unit {
+  font-size: 11.5px;
+  color: var(--ink-3);
+}
+
+.city-stat--accent .city-stat__unit {
+  color: var(--accent-0);
+  opacity: 0.8;
+}
+
+.city-head__range {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  font-size: 12.5px;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.city-head__range-sep {
+  color: var(--ink-5);
+}
+
+/* ---- trips inside a city ---- */
+
+.city-trips {
+  display: block;
+}
+
+.city-trips__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 34px;
+}
+
+.city-trips__title {
+  font-size: 15.5px;
+  font-weight: 650;
+  color: var(--ink-0);
+}
+
+.city-trips__count {
+  font-size: 12px;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.city-trip {
+  position: relative;
+  margin-top: 16px;
+  padding: 16px var(--pad-card);
+  border-radius: var(--r-lg);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  box-shadow: var(--sh-1);
+}
+
+/* Arriving from the timeline: the focused trip pulses once so the user sees
+   exactly which record they tapped. */
+.city-trip.is-flash {
+  animation: tf-trip-flash 1.4s var(--ease-out) both;
+}
+
+@keyframes tf-trip-flash {
+  0% {
+    background: var(--accent-wash);
+    border-color: var(--accent-2);
+    box-shadow: 0 0 0 4px var(--accent-wash), var(--sh-2);
+  }
+  55% {
+    background: var(--accent-wash);
+    border-color: var(--accent-2);
+    box-shadow: 0 0 0 4px var(--accent-wash), var(--sh-2);
+  }
+  100% {
+    background: var(--paper);
+    border-color: var(--line);
+    box-shadow: var(--sh-1);
+  }
+}
+
+.city-trip__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.city-trip__ordinal {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.city-trip__ordinal-label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 640;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+
+.city-trip__ordinal-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: var(--r-full);
+  background: var(--surface-2);
+  color: var(--ink-2);
+  font-size: 10.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.city-trip__range {
+  margin-top: 7px;
+  font-size: 15.5px;
+  font-weight: 640;
+  letter-spacing: -0.01em;
+  color: var(--ink-0);
+  font-variant-numeric: tabular-nums;
+}
+
+.city-trip__dates {
+  margin-top: 3px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.city-trip__days {
+  margin-top: 6px;
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 9px;
+  border-radius: var(--r-full);
+  background: var(--accent-wash);
+  color: var(--accent-0);
+  font-size: 11px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.city-trip__section {
+  margin-top: 18px;
+}
+
+.city-trip__section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.city-trip__section-title {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 640;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.city-trip__section-count {
+  font-size: 11px;
+  color: var(--ink-4);
+  font-variant-numeric: tabular-nums;
+}
+
+.city-trip__note {
+  font-size: 14px;
+  line-height: 1.62;
+  color: var(--ink-1);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.city-trip__add-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 0;
+  appearance: none;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 620;
+  color: var(--accent-0);
+  cursor: pointer;
+}
+
+.city-trip__empty-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: var(--r-sm);
+  background: var(--surface-2);
+  border: 1px dashed var(--line-strong);
+}
+
+.city-trip__empty-row--action {
+  appearance: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.city-trip__empty-text {
+  font-size: 12.5px;
+  color: var(--ink-3);
+}
+
+.city-trip__empty-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: var(--r-full);
+  border: 0;
+  background: var(--paper);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 640;
+  color: var(--accent-0);
+  box-shadow: var(--sh-0);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.city-trip__foot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 16px;
+  padding-top: 13px;
+  border-top: 1px solid var(--line);
+}
+
+.city-trip__delete {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 0;
+  appearance: none;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 580;
+  color: var(--ink-4);
+  cursor: pointer;
+}
+
+.city-trip__delete:active {
+  color: #b3453a;
+}
+
+.city-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 34px;
+}
+
+/* ============================================================ BIN ======= */
+
+.screen-bin .page-header {
+  padding-top: calc(var(--safe-t) + 6px);
+}
+
+/* ======================================================== RESPONSIVE ==== */
+
+@media (min-width: 700px) {
+  .hero-stat__number {
+    font-size: clamp(84px, 13vw, 112px);
+  }
+}
+
+/* Tablets / desktop: two columns where the content is a uniform list. */
+@media (min-width: 820px) {
+  .cities-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .home-recent {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .tl-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px;
+  }
+
+  .city-actions {
+    flex-direction: row;
+  }
+}
+
+@media (min-width: 1180px) {
+  .cities-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Narrow phones (320–340px): tighten the gutter, shrink display type. */
+@media (max-width: 352px) {
+  :root {
+    --gutter: 15px;
+    --pad-card: 15px;
+  }
+
+  .hero-stat__number {
+    font-size: 58px;
+  }
+
+  .city-head__name {
+    font-size: 30px;
+  }
+
+  .cities-sort {
+    padding: 0 10px;
+  }
+
+      }
+
+/* Landscape phones: cap the vertical rhythm so the hero cannot dominate. */
+@media (max-height: 470px) and (orientation: landscape) {
+  .home-hero,
+  .map-header,
+  .tl-header,
+  .cities-header {
+    padding-top: 18px;
+  }
+
+  .hero-stat {
+    margin-top: 22px;
+  }
+
+  .hero-stat__number {
+    font-size: 56px;
+  }
+}

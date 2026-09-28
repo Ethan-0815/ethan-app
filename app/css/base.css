@@ -1,0 +1,294 @@
+/* ==========================================================================
+   ETHAN Super App · Shell 基础层
+   设计语言：Premium Minimalism · Light Glassmorphism
+   浅色：明亮 / 干净 / 柔和 / 高级；深色：深灰近黑（非纯黑）、克制高光
+   ========================================================================== */
+
+:root {
+  /* 颜色 —— 浅色 */
+  --bg: #f3f3f4;
+  --bg-warm-1: rgba(243, 216, 200, 0.42);
+  --bg-warm-2: rgba(232, 220, 242, 0.28);
+  --bg-warm-3: rgba(219, 233, 244, 0.24);
+  --surface: rgba(255, 255, 255, 0.72);
+  --surface-strong: rgba(255, 255, 255, 0.92);
+  --surface-sunken: rgba(16, 17, 20, 0.045);
+  --text-1: #1c1c1e;
+  --text-2: #85868b;
+  --text-3: #aeaeb3;
+  --hairline: rgba(20, 20, 24, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.65);
+  --glass-highlight: rgba(255, 255, 255, 0.85);
+
+  --time-strong: #262628;
+  --time-dim: #b9babd;
+
+  --accent-ms: #d29a6b;   /* 我的空间 · 暖橙 */
+  --accent-tb: #35b37e;   /* 工具箱 · 绿 */
+  --accent-tf: #5b8def;   /* 旅行足迹 · 蓝 */
+  --accent-eth: #e06a8a;  /* ETHAN · 粉 */
+  --memory-label: #b3854d;
+
+  --switch-on: #2f7d5f;
+  --switch-off: rgba(120, 120, 128, 0.26);
+
+  --seg-track: rgba(120, 120, 128, 0.1);
+  --seg-active: #ffffff;
+
+  --shadow-card: 0 10px 30px rgba(24, 24, 30, 0.06), 0 1px 2px rgba(24, 24, 30, 0.04);
+  --shadow-float: 0 14px 40px rgba(24, 24, 30, 0.14);
+  --shadow-pop: 0 2px 10px rgba(24, 24, 30, 0.08);
+
+  --blur: 22px;
+  --r-xl: 24px;
+  --r-lg: 18px;
+  --r-md: 14px;
+  --pad-x: 22px;
+  --nav-h: 62px;
+
+  color-scheme: light;
+}
+
+html[data-theme='dark'] {
+  --bg: #141416;
+  --bg-warm-1: rgba(84, 62, 52, 0.22);
+  --bg-warm-2: rgba(64, 58, 84, 0.18);
+  --bg-warm-3: rgba(48, 62, 80, 0.16);
+  --surface: rgba(32, 32, 35, 0.72);
+  --surface-strong: rgba(42, 42, 46, 0.94);
+  --surface-sunken: rgba(255, 255, 255, 0.05);
+  --text-1: #f1f1f3;
+  --text-2: #909096;
+  --text-3: #6a6a70;
+  --hairline: rgba(255, 255, 255, 0.07);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-highlight: rgba(255, 255, 255, 0.05);
+
+  --time-strong: #f4f4f6;
+  --time-dim: #54555a;
+
+  --accent-ms: #d9a06e;
+  --accent-tb: #3fbd88;
+  --accent-tf: #6d99f2;
+  --accent-eth: #e4799a;
+  --memory-label: #cba36b;
+
+  --switch-on: #3aa37c;
+  --switch-off: rgba(140, 140, 150, 0.32);
+
+  --seg-track: rgba(255, 255, 255, 0.055);
+  --seg-active: #3a3a3f;
+
+  --shadow-card: 0 12px 34px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-float: 0 16px 44px rgba(0, 0, 0, 0.55);
+  --shadow-pop: 0 2px 10px rgba(0, 0, 0, 0.35);
+
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI',
+    'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Microsoft YaHei', Roboto,
+    system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text-1);
+  background: var(--bg);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+button {
+  font-family: inherit;
+  border: 0;
+  background: none;
+  color: inherit;
+  padding: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---- 应用背景氛围：与 UI 效果图一致的柔和光线 ----
+   浅色：左上暖橘光晕扫过顶部 + 左下薄荷冷光 + 右下淡蓝，大面积留白
+   深色：非纯黑（#141416），顶部微弱暖光泽 + 底部冷光泽，克制高光 */
+.app-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(95% 48% at 20% 0%, rgba(247, 216, 195, 0.6) 0%, rgba(247, 216, 195, 0.18) 42%, transparent 68%),
+    radial-gradient(55% 30% at 88% 4%, rgba(244, 224, 240, 0.4) 0%, transparent 62%),
+    radial-gradient(70% 42% at 0% 100%, rgba(213, 236, 224, 0.42) 0%, transparent 56%),
+    radial-gradient(60% 38% at 100% 100%, rgba(218, 232, 244, 0.36) 0%, transparent 56%);
+}
+html[data-theme='dark'] .app-bg {
+  background:
+    radial-gradient(90% 40% at 22% 0%, rgba(126, 96, 76, 0.22) 0%, rgba(126, 96, 76, 0.06) 45%, transparent 70%),
+    radial-gradient(55% 28% at 88% 2%, rgba(96, 88, 116, 0.14) 0%, transparent 62%),
+    radial-gradient(70% 42% at 0% 100%, rgba(58, 92, 78, 0.16) 0%, transparent 58%),
+    radial-gradient(60% 38% at 100% 100%, rgba(52, 70, 92, 0.14) 0%, transparent 56%);
+}
+
+/* ---- 通用玻璃卡 ---- */
+.glass-card {
+  background: var(--surface);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-card);
+  -webkit-backdrop-filter: blur(var(--blur)) saturate(1.4);
+  backdrop-filter: blur(var(--blur)) saturate(1.4);
+}
+
+/* ---- 小节标签 ---- */
+.section-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-2);
+  letter-spacing: 0.2px;
+  margin: 26px 2px 10px;
+}
+
+/* ---- 开关 ---- */
+.esa-switch {
+  position: relative;
+  width: 46px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--switch-off);
+  transition: background 0.22s ease;
+  flex: none;
+}
+.esa-switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.22);
+  transition: transform 0.22s cubic-bezier(0.3, 1.2, 0.6, 1);
+}
+.esa-switch.is-on { background: var(--switch-on); }
+.esa-switch.is-on::after { transform: translateX(18px); }
+.esa-switch[disabled] { opacity: 0.45; }
+
+/* ---- 设置行 ---- */
+.esa-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 13px 16px;
+  text-align: left;
+  font-size: 14.5px;
+  color: var(--text-1);
+  position: relative;
+}
+.esa-row + .esa-row::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 48px;
+  right: 0;
+  height: 1px;
+  background: var(--hairline);
+}
+.esa-row__icon { font-size: 17px; width: 22px; text-align: center; flex: none; }
+.esa-row__main { flex: 1; min-width: 0; }
+.esa-row__title { font-weight: 500; }
+.esa-row__desc { font-size: 12px; color: var(--text-2); margin-top: 1px; }
+.esa-row__chev { color: var(--text-3); flex: none; }
+
+/* ---- 屏幕容器与转场 ---- */
+.screen {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  visibility: hidden;
+  pointer-events: none;
+}
+.screen.is-active {
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* 屏幕激活过渡（柔和上移淡入；可在设置中关闭） */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-motion='on'] .screen.is-active {
+    animation: esa-screen-in 0.26s cubic-bezier(0.22, 0.9, 0.32, 1);
+  }
+}
+@keyframes esa-screen-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---- 模块 iframe 层 ---- */
+#module-host { position: fixed; inset: 0; z-index: 20; pointer-events: none; }
+.module-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: var(--bg);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(16px) scale(0.996);
+  transition: opacity 0.24s ease, transform 0.24s cubic-bezier(0.22, 0.9, 0.32, 1), visibility 0.24s;
+}
+.module-frame.is-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: none;
+}
+html[data-motion='off'] .module-frame { transition: opacity 0.12s ease; transform: none; }
+
+/* ---- toast ---- */
+#esa-toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 56px);
+  transform: translate(-50%, 8px);
+  z-index: 90;
+  padding: 9px 18px;
+  border-radius: 999px;
+  background: var(--surface-strong);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-float);
+  color: var(--text-1);
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  -webkit-backdrop-filter: blur(var(--blur));
+  backdrop-filter: blur(var(--blur));
+}
+#esa-toast.is-show { opacity: 1; transform: translate(-50%, 0); }
+
+/* 动画偏好关闭时全局降级 */
+html[data-motion='off'] *, html[data-motion='off'] *::before, html[data-motion='off'] *::after {
+  transition-duration: 0.01ms !important;
+  animation-duration: 0.01ms !important;
+}
+
+/* 安全区 */
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }

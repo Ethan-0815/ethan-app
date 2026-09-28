@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="theme-color" content="#f5f6f8">
+<meta name="color-scheme" content="light">
+<meta name="referrer" content="no-referrer">
+<title>ETHAN</title>
+<script>
+/* ETHAN Super App：首绘前应用统一主题，避免闪白 */
+try {
+  var __esaPref = 'system';
+  try { __esaPref = localStorage.getItem('esa.theme') || 'system'; } catch (e2) {}
+  var __esaDark = __esaPref === 'dark' || (__esaPref !== 'light' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
+  document.documentElement.setAttribute('data-theme', __esaDark ? 'dark' : 'light');
+  var __esaMeta = document.querySelector('meta[name="theme-color"]');
+  if (__esaMeta) __esaMeta.setAttribute('content', __esaDark ? '#0e1012' : '#f2f3f5');
+} catch (e) {}
+</script>
+<link rel="stylesheet" href="css/app.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231b1e23'/%3E%3Ctext x='16' y='22' font-size='16' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'%3EE%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="esa-glass.css">
+</head>
+<body>
+<div id="app">
+  <!-- 锁定 / 首次设置 PIN -->
+  <section id="lock" class="screen screen--lock" hidden></section>
+
+  <!-- 主界面 -->
+  <section id="main" class="screen screen--main" hidden>
+    <header id="topbar" class="topbar"></header>
+    <main id="view" class="view"></main>
+    <nav id="tabbar" class="tabbar" aria-label="主导航"></nav>
+  </section>
+
+  <!-- 全屏面板：详情 / 编辑 / 回收站 / 备份 / 关于 -->
+  <div id="panels" class="panels"></div>
+
+  <!-- 轻量弹窗：新建 / 密码生成器 / 确认 -->
+  <div id="sheets" class="sheets"></div>
+
+  <div id="toast" class="toast" aria-live="polite"></div>
+</div>
+
+<!-- 无网络依赖：全部脚本本地加载，经典脚本（可 file:// 直接打开） -->
+<script src="js/core/util.js"></script>
+<script src="js/core/crypto.js"></script>
+<script src="js/core/db.js"></script>
+<script src="js/core/store.js"></script>
+<script src="js/ui/icons.js"></script>
+<script src="js/ui/dom.js"></script>
+<script src="js/ui/lock.js"></script>
+<script src="js/ui/home.js"></script>
+<script src="js/ui/secrets.js"></script>
+<script src="js/ui/item.js"></script>
+<script src="js/ui/trash.js"></script>
+<script src="js/ui/settings.js"></script>
+<script src="js/ui/app.js"></script>
+<!-- ETHAN Super App 模块桥（整合层新增，不含任何敏感逻辑） -->
+<script src="esa.js"></script>
+</body>
+</html>

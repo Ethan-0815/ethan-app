@@ -1,0 +1,187 @@
+[
+  {
+    "name": "IndexedDB 已创建 meta / vault 两个 store",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "IndexedDB 中不含明文密码",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "IndexedDB 中不含明文密钥",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "IndexedDB 中不含明文文本",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "IndexedDB 中不含明文自定义字段",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "IndexedDB 中不含备用验证码",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "IndexedDB 中不含用户名 / 网址",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "IndexedDB 中不含 PIN",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "meta 保存 KDF 参数（salt / iterations）",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "meta 保存包裹后的 DEK（密文）",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "meta 保存校验值（密文）",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "meta 不含可直接使用的数据密钥明文",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "vault 记录为密文结构（iv + ct）",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "vault 密文非明文 JSON",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "localStorage 不含敏感数据",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "localStorage 不含 PIN",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "localStorage 仅保存 UI 偏好",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "sessionStorage 为空或不含敏感数据",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "未写入 Cookie",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "列表页不显示密码",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "列表页不显示密钥值",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "列表页不显示文本正文",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "搜索密码无结果",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "搜索密钥无结果",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "备份文件不含明文密码",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "备份文件不含明文密钥",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "备份文件不含明文文本",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "备份文件名规范",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "刷新后回到锁定屏",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "刷新后未解锁无法读取数据",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "刷新后内存中无解密密钥",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "刷新后重新解锁可用",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "刷新后数据仍可解密",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "锁定后读取被阻止",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "锁定后内存中无 vault",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "错误 PIN 提示不含任何数据信息",
+    "pass": true,
+    "extra": ""
+  },
+  {
+    "name": "未发现硬编码主密钥常量",
+    "pass": true,
+    "extra": ""
+  }
+]

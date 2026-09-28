@@ -1,0 +1,189 @@
+/* ==========================================================================
+   ETHAN Super App · 整合层样式（travel-footprint）
+   返回键统一样式（32px 圆形外框，深色独立适配）。
+   ========================================================================== */
+
+/* 子页顶栏返回按钮也统一为圆形 */
+.icon-btn {
+  border-radius: 50%;
+}
+.city-head .icon-btn {
+  width: 32px;
+  height: 32px;
+}
+
+.esa-back-btn {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-1);
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-edge);
+  box-shadow: 0 2px 10px rgba(10, 14, 20, 0.08);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  transition: transform 0.15s ease;
+}
+html[data-theme='dark'] .esa-back-btn {
+  color: var(--ink-4);
+  background: rgba(44, 48, 56, 0.88);
+  border-color: rgba(255, 255, 255, 0.09);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+.esa-back-btn:active { transform: scale(0.9); }
+.esa-back-btn__icon { display: inline-flex; }
+
+/* 时间线页头部：返回键与标题同行 */
+.tl-header { display: flex; align-items: center; gap: 12px; }
+
+/* 时间线年份轨道圆点左侧被裁切：为列表与标题统一增加左内边距 */
+.screen-timeline .tl-scroll { padding-left: calc(var(--gutter) + 10px); }
+.screen-timeline > .tl-header { padding-left: calc(var(--gutter) + 10px); }
+
+/* 出发地端点：空心样式（航线起点，尚未单独记录的城市） */
+.map-dot__core--origin {
+  fill: var(--paper, #fff);
+  stroke: var(--accent-0);
+  stroke-width: 2;
+}
+.map-dot__label {
+  font-size: 10px;
+  font-weight: 600;
+  text-anchor: middle;
+  fill: var(--ink-2);
+  paint-order: stroke;
+  stroke: var(--paper);
+  stroke-width: 3px;
+}
+
+/* ---- 出发地：表单内嵌展开面板（无叠层遮挡） ---- */
+.from-panel {
+  margin-top: 10px;
+  padding: 12px 14px 14px;
+  background: var(--paper-dim);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  animation: tf-rise 260ms var(--ease-out) both;
+}
+.from-panel[hidden] { display: none; }
+.from-panel__input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--paper);
+  font-size: 13.5px;
+  color: var(--ink-0);
+  outline: none;
+}
+.from-panel__input:focus { border-color: var(--accent-0); }
+.from-panel__label {
+  margin: 12px 0 6px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--ink-3);
+}
+.from-panel__list { max-height: 240px; overflow-y: auto; }
+.from-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.from-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 12px 7px 8px;
+  border-radius: 999px;
+  background: var(--paper);
+  border: 1px solid var(--accent-0);
+  color: var(--accent-0);
+  font-size: 13px;
+  font-weight: 600;
+  transition: transform 0.15s ease;
+}
+.from-chip:active { transform: scale(0.94); }
+.from-chip__badge {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-0);
+  color: var(--paper);
+  font-size: 11px;
+}
+.from-panel__row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 10px;
+  border-radius: 10px;
+  text-align: left;
+  color: var(--ink-0);
+  transition: background 0.15s ease;
+}
+.from-panel__row:active { background: var(--sand-2); }
+.from-panel__row--new { color: var(--accent-0); font-weight: 600; }
+.from-panel__row--new .chooser__new-icon { color: var(--accent-0); }
+.from-panel__hint { margin: 10px 0 2px; font-size: 12.5px; color: var(--ink-3); }
+
+/* 常驻出发地入口（地图页头部） */
+.map-header__from { display: block; margin-top: 6px; }
+.map-from {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--sand-2);
+  color: var(--ink-1);
+  font-size: 11.5px;
+  font-weight: 600;
+  transition: transform 0.15s ease;
+}
+.map-from:active { transform: scale(0.95); }
+
+/* 主页迷你地图 origin 端点 */
+.mini-map__core--origin {
+  fill: var(--paper);
+  stroke: var(--accent-0);
+  stroke-width: 2;
+}
+
+/* 常驻出发地 chip（默认标记） */
+.from-chip--home {
+  border-width: 2px;
+  background: color-mix(in srgb, var(--accent-0) 10%, var(--paper));
+}
+
+/* 统一交互：点卡片弹出更换/清除 */
+.form__locked--tap {
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.form__locked--tap:active { transform: scale(0.985); }
+.form__locked-chev {
+  color: var(--ink-3);
+  display: inline-flex;
+  transition: transform 0.2s ease;
+}
+.form-picks__actions[hidden] { display: none; }
+.form-picks__actions {
+  animation: tf-rise 220ms var(--ease-out) both;
+}
+.from-panel[hidden] { display: none; }
+
+/* 操作行与卡片保持间距（城市/出发地弹出后的更换清除） */
+.form__locked--tap + .form-picks__actions { margin-top: 12px; }
+
+/* 城市页分组间距收紧：标签紧贴自己组内的卡片（只留一点） */
+.cities-list { gap: 16px; }
+.cities-list__label {
+  margin: 12px 0 -8px;
+}
+.cities-list__label:first-child { margin-top: 0; }

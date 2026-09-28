@@ -1,0 +1,367 @@
+[
+  {
+    "group": "加密",
+    "name": "PBKDF2 派生密钥可用且能加解密",
+    "pass": true
+  },
+  {
+    "group": "加密",
+    "name": "不同 salt 产生不同密钥（无法互相解密）",
+    "pass": true
+  },
+  {
+    "group": "加密",
+    "name": "每次加密使用不同 IV",
+    "pass": true
+  },
+  {
+    "group": "加密",
+    "name": "AES-GCM 能检测密文被篡改",
+    "pass": true
+  },
+  {
+    "group": "加密",
+    "name": "KDF 使用随机 salt（16 字节）",
+    "pass": true
+  },
+  {
+    "group": "加密",
+    "name": "随机 IV 为 12 字节",
+    "pass": true
+  },
+  {
+    "group": "PIN",
+    "name": "首次 setup 后处于解锁状态",
+    "pass": true
+  },
+  {
+    "group": "PIN",
+    "name": "错误 PIN 无法解锁且提示明确",
+    "pass": true
+  },
+  {
+    "group": "PIN",
+    "name": "正确 PIN 可解锁",
+    "pass": true
+  },
+  {
+    "group": "PIN",
+    "name": "锁定后无法读写数据（抛出 NOT_UNLOCKED）",
+    "pass": true
+  },
+  {
+    "group": "PIN",
+    "name": "修改 PIN 后新 PIN 可用、旧 PIN 失效",
+    "pass": true
+  },
+  {
+    "group": "PIN",
+    "name": "PIN 不以明文出现在持久化数据中",
+    "pass": true
+  },
+  {
+    "group": "PIN",
+    "name": "修改 PIN 不会重新加密数据（DEK 不变，vault 可继续解密）",
+    "pass": true
+  },
+  {
+    "group": "密码生成",
+    "name": "默认生成 16 位",
+    "pass": true
+  },
+  {
+    "group": "密码生成",
+    "name": "可指定长度",
+    "pass": true
+  },
+  {
+    "group": "密码生成",
+    "name": "仅数字时只含数字",
+    "pass": true
+  },
+  {
+    "group": "密码生成",
+    "name": "关闭大写时不出现大写",
+    "pass": true
+  },
+  {
+    "group": "密码生成",
+    "name": "每次生成结果不同",
+    "pass": true
+  },
+  {
+    "group": "密码生成",
+    "name": "生成的密码覆盖所有选中字符类别",
+    "pass": true
+  },
+  {
+    "group": "密码生成",
+    "name": "字符分布无明显偏斜（1000 次采样覆盖 62+ 字符）",
+    "pass": true
+  },
+  {
+    "group": "密码生成",
+    "name": "长度过小时回退到最小值 4",
+    "pass": true
+  },
+  {
+    "group": "CRUD",
+    "name": "新建账号密码并保存",
+    "pass": true
+  },
+  {
+    "group": "CRUD",
+    "name": "可选字段留空也能保存",
+    "pass": true
+  },
+  {
+    "group": "CRUD",
+    "name": "更新条目会刷新 updatedAt 并保留 createdAt",
+    "pass": true
+  },
+  {
+    "group": "CRUD",
+    "name": "创建时间/修改时间字段齐备",
+    "pass": true
+  },
+  {
+    "group": "CRUD",
+    "name": "四种分类均可创建",
+    "pass": true
+  },
+  {
+    "group": "CRUD",
+    "name": "校验：账号名称必填",
+    "pass": true
+  },
+  {
+    "group": "CRUD",
+    "name": "校验：密码必填",
+    "pass": true
+  },
+  {
+    "group": "CRUD",
+    "name": "校验：通过",
+    "pass": true
+  },
+  {
+    "group": "搜索",
+    "name": "按标题搜索",
+    "pass": true
+  },
+  {
+    "group": "搜索",
+    "name": "按用户名搜索",
+    "pass": true
+  },
+  {
+    "group": "搜索",
+    "name": "按网址搜索",
+    "pass": true
+  },
+  {
+    "group": "搜索",
+    "name": "按标签搜索",
+    "pass": true
+  },
+  {
+    "group": "搜索",
+    "name": "按备注搜索",
+    "pass": true
+  },
+  {
+    "group": "搜索",
+    "name": "不搜索密码明文",
+    "pass": true
+  },
+  {
+    "group": "搜索",
+    "name": "不搜索密钥值",
+    "pass": true
+  },
+  {
+    "group": "搜索",
+    "name": "不搜索文本正文",
+    "pass": true
+  },
+  {
+    "group": "搜索",
+    "name": "搜索不区分大小写",
+    "pass": true
+  },
+  {
+    "group": "搜索",
+    "name": "搜索结果不含已删除条目",
+    "pass": true
+  },
+  {
+    "group": "搜索",
+    "name": "标签聚合",
+    "pass": true
+  },
+  {
+    "group": "搜索",
+    "name": "按分类过滤",
+    "pass": true
+  },
+  {
+    "group": "回收站",
+    "name": "删除进入回收站而非真正删除",
+    "pass": true
+  },
+  {
+    "group": "回收站",
+    "name": "回收站条目可恢复",
+    "pass": true
+  },
+  {
+    "group": "回收站",
+    "name": "永久删除后彻底移除",
+    "pass": true
+  },
+  {
+    "group": "回收站",
+    "name": "清空回收站",
+    "pass": true
+  },
+  {
+    "group": "持久化",
+    "name": "锁定再解锁（模拟关闭重开）数据完整",
+    "pass": true
+  },
+  {
+    "group": "持久化",
+    "name": "落盘的 vault 为密文，不含明文",
+    "pass": true
+  },
+  {
+    "group": "持久化",
+    "name": "IndexedDB 中 meta 不含明文 PIN 与明文密钥",
+    "pass": true
+  },
+  {
+    "group": "备份恢复",
+    "name": "准备备份数据（四类齐全）",
+    "pass": true
+  },
+  {
+    "group": "备份恢复",
+    "name": "创建加密备份",
+    "pass": true
+  },
+  {
+    "group": "备份恢复",
+    "name": "备份文件为密文，不含敏感明文",
+    "pass": true
+  },
+  {
+    "group": "备份恢复",
+    "name": "备份包含 schemaVersion / data / metadata",
+    "pass": true
+  },
+  {
+    "group": "备份恢复",
+    "name": "备份密码错误时拒绝",
+    "pass": true
+  },
+  {
+    "group": "备份恢复",
+    "name": "备份文件损坏时给出明确错误",
+    "pass": true
+  },
+  {
+    "group": "备份恢复",
+    "name": "非 ETHAN 文件被拒绝",
+    "pass": true
+  },
+  {
+    "group": "备份恢复",
+    "name": "恢复（合并）不覆盖已存在的重复条目",
+    "pass": true
+  },
+  {
+    "group": "备份恢复",
+    "name": "合并恢复会记录冲突而不静默覆盖",
+    "pass": true
+  },
+  {
+    "group": "备份恢复",
+    "name": "合并恢复（覆盖策略）可更新条目",
+    "pass": true
+  },
+  {
+    "group": "备份恢复",
+    "name": "替换恢复会用备份内容覆盖全部数据",
+    "pass": true
+  },
+  {
+    "group": "备份恢复",
+    "name": "恢复后数据可正常解密使用",
+    "pass": true
+  },
+  {
+    "group": "备份恢复",
+    "name": "清空后从备份恢复，数据完整",
+    "pass": true
+  },
+  {
+    "group": "数据迁移",
+    "name": "migrate 补齐缺失字段（旧结构）",
+    "pass": true
+  },
+  {
+    "group": "数据迁移",
+    "name": "migrate 修正非法分类",
+    "pass": true
+  },
+  {
+    "group": "数据迁移",
+    "name": "migrate 拒绝更高版本的数据结构",
+    "pass": true
+  },
+  {
+    "group": "数据迁移",
+    "name": "normalizeItem 修正密钥类型",
+    "pass": true
+  },
+  {
+    "group": "数据迁移",
+    "name": "备份/恢复支持 schemaVersion 检查",
+    "pass": true
+  },
+  {
+    "group": "工具",
+    "name": "相对时间：刚刚",
+    "pass": true
+  },
+  {
+    "group": "工具",
+    "name": "相对时间：昨天",
+    "pass": true
+  },
+  {
+    "group": "工具",
+    "name": "日期格式 2026.09.24",
+    "pass": true
+  },
+  {
+    "group": "工具",
+    "name": "URL 归一化",
+    "pass": true
+  },
+  {
+    "group": "工具",
+    "name": "URL 归一化保留 https",
+    "pass": true
+  },
+  {
+    "group": "工具",
+    "name": "uid 唯一",
+    "pass": true
+  },
+  {
+    "group": "工具",
+    "name": "base64 往返",
+    "pass": true
+  }
+]

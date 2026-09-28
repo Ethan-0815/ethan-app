@@ -1,0 +1,497 @@
+/* ==========================================================================
+   Travel Footprint — base.css
+   Design tokens, reset, typography, motion primitives
+   ========================================================================== */
+
+:root {
+  /* ---- Palette: clean white base + deep ink + a single travel accent ---- */
+  /* `--sand-*` names kept for compatibility — values are now neutral greys. */
+  --sand-0: #ffffff;
+  --sand-1: #f6f7f8;
+  --sand-2: #eceef0;
+  --sand-3: #dfe2e6;
+  --sand-4: #c9cdd4;
+
+  --ink-0: #16181c;
+  --ink-1: #2c3038;
+  --ink-2: #4d5461;
+  --ink-3: #79818f;
+  --ink-4: #a5abb5;
+  --ink-5: #c8ccd2;
+
+  --paper: #ffffff;
+  --paper-dim: #fafafa;
+
+  /* accent — calm travel blue, reads clean on white */
+  --accent-0: #3d6ea6;
+  --accent-1: #5483bb;
+  --accent-2: #a8c4e2;
+  --accent-wash: #edf3fa;
+
+  /* secondary accents for map/timeline variety */
+  --teal: #3c7a78;
+  --teal-wash: #eef5f4;
+  --gold: #3d6ea6;
+  --gold-wash: #edf3fa;
+
+  /* ---- Surfaces ---- */
+  --bg: var(--sand-0);
+  --surface: var(--paper);
+  --surface-2: var(--sand-1);
+  --line: rgba(22, 24, 28, 0.08);
+  --line-strong: rgba(22, 24, 28, 0.14);
+
+  /* ---- Glass ---- */
+  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-bg-strong: rgba(255, 255, 255, 0.86);
+  --glass-border: rgba(255, 255, 255, 0.7);
+  --glass-edge: rgba(22, 24, 28, 0.06);
+  --glass-shadow: 0 8px 32px rgba(22, 24, 28, 0.10), 0 1px 2px rgba(22, 24, 28, 0.04);
+  --glass-blur: 20px;
+
+  /* ---- Radius ---- */
+  --r-xs: 8px;
+  --r-sm: 12px;
+  --r-md: 16px;
+  --r-lg: 22px;
+  --r-xl: 28px;
+  --r-full: 999px;
+
+  /* ---- Shadow ---- */
+  --sh-0: 0 1px 2px rgba(22, 24, 28, 0.04);
+  --sh-1: 0 2px 8px rgba(22, 24, 28, 0.06), 0 1px 2px rgba(22, 24, 28, 0.04);
+  --sh-2: 0 6px 20px rgba(22, 24, 28, 0.08), 0 1px 3px rgba(22, 24, 28, 0.04);
+  --sh-3: 0 14px 40px rgba(22, 24, 28, 0.12), 0 2px 6px rgba(22, 24, 28, 0.05);
+
+  /* ---- Type ---- */
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "PingFang SC",
+          "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+  --font-num: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  /* ---- Layout ---- */
+  --page-pad: 20px;
+  --nav-h: 62px;
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-t: env(safe-area-inset-top, 0px);
+
+  /* ---- Motion ---- */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.3, 1.28, 0.6, 1);
+  --d-fast: 160ms;
+  --d-mid: 240ms;
+  --d-slow: 340ms;
+
+  /* ---- Aliases ----------------------------------------------------------
+     layout.css / components.css read a friendlier set of names. Keeping the
+     aliases here means there is still exactly ONE place that owns a value.
+     ---------------------------------------------------------------------- */
+  --font-sans: var(--font);
+  --font-display: var(--font-num);
+
+  --surface-0: var(--paper);
+  --surface-2: var(--sand-1);
+  --surface-3: var(--sand-2);
+
+  --line-0: var(--line);
+  --line-1: var(--line-strong);
+
+  --shadow-1: var(--sh-1);
+  --shadow-2: var(--sh-2);
+
+  /* ---- Page metrics ---- */
+  --gutter: var(--page-pad);
+  --pad-card: 18px;
+  --maxw: 720px;
+
+  color-scheme: light;
+}
+
+/* low-end devices / no backdrop-filter fallback → flat translucent */
+html[data-glass="flat"] {
+  --glass-bg: rgba(255, 255, 255, 0.94);
+  --glass-bg-strong: rgba(255, 255, 255, 0.97);
+  --glass-blur: 0px;
+}
+
+/* --------------------------------------------------------------------------
+   Dark theme — same neutral family, inverted. Enabled via
+   html[data-theme="dark"] (set by the Settings sheet: light / dark / system).
+   Only token values change here; every component keeps reading the vars.
+   -------------------------------------------------------------------------- */
+html[data-theme="dark"] {
+  --sand-0: #121418;
+  --sand-1: #1f232a;   /* wells & inputs — must stay LIGHTER than paper */
+  --sand-2: #282d34;
+  --sand-3: #323840;
+  --sand-4: #40474f;
+
+  --ink-0: #f0f2f5;
+  --ink-1: #dce0e6;
+  --ink-2: #b3bac3;
+  --ink-3: #8a919c;
+  --ink-4: #69707b;
+  --ink-5: #4b525c;
+
+  --paper: #181b20;
+  --paper-dim: #14171b;
+
+  /* In the dark, "text accent" goes light and "fill accent" goes deep so
+     white-on-accent labels stay readable. */
+  --accent-0: #8fb7e3;
+  --accent-1: #3f6f9f;
+  --accent-2: #2c4d6e;
+  --accent-wash: #1c2836;
+
+  --teal: #5aa8a5;
+  --teal-wash: #17272b;
+  --gold: #8fb7e3;
+  --gold-wash: #1c2836;
+
+  --line: rgba(255, 255, 255, 0.09);
+  --line-strong: rgba(255, 255, 255, 0.16);
+
+  --glass-bg: rgba(18, 21, 26, 0.72);
+  --glass-bg-strong: rgba(18, 21, 26, 0.88);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-edge: rgba(255, 255, 255, 0.06);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.42), 0 1px 2px rgba(0, 0, 0, 0.30);
+
+  --sh-0: 0 1px 2px rgba(0, 0, 0, 0.30);
+  --sh-1: 0 2px 8px rgba(0, 0, 0, 0.34), 0 1px 2px rgba(0, 0, 0, 0.26);
+  --sh-2: 0 6px 20px rgba(0, 0, 0, 0.40), 0 1px 3px rgba(0, 0, 0, 0.26);
+  --sh-3: 0 14px 40px rgba(0, 0, 0, 0.50), 0 2px 6px rgba(0, 0, 0, 0.30);
+
+  color-scheme: dark;
+}
+
+html[data-theme="dark"][data-glass="flat"] {
+  --glass-bg: rgba(20, 23, 28, 0.96);
+  --glass-bg-strong: rgba(20, 23, 28, 0.98);
+}
+
+/* --------------------------------------------------------------------------
+   Reset
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-1);
+  background: var(--bg);
+  overflow: hidden; /* app shell scrolls internally */
+  overscroll-behavior: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#app {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+h1, h2, h3, h4, h5, h6, p, figure {
+  margin: 0;
+  font-weight: inherit;
+}
+
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+input,
+textarea {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   Typography scale
+   -------------------------------------------------------------------------- */
+.t-display {
+  font-family: var(--font-num);
+  font-size: clamp(64px, 21vw, 96px);
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.t-h1 {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--ink-0);
+}
+
+.t-h2 {
+  font-size: 20px;
+  font-weight: 650;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  color: var(--ink-0);
+}
+
+.t-h3 {
+  font-size: 17px;
+  font-weight: 620;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--ink-0);
+}
+
+.t-body {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-1);
+}
+
+.t-sm {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+
+.t-xs {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ink-3);
+}
+
+.t-label {
+  font-size: 11px;
+  font-weight: 640;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  font-family: var(--font-mono);
+}
+
+.t-num {
+  font-family: var(--font-num);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.t-muted { color: var(--ink-3); }
+.t-dim   { color: var(--ink-4); }
+.t-accent { color: var(--accent-0); }
+
+.t-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.t-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   Utilities
+   -------------------------------------------------------------------------- */
+.u-row {
+  display: flex;
+  align-items: center;
+}
+
+.u-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.u-gap-4  { gap: 4px; }
+.u-gap-6  { gap: 6px; }
+.u-gap-8  { gap: 8px; }
+.u-gap-10 { gap: 10px; }
+.u-gap-12 { gap: 12px; }
+.u-gap-16 { gap: 16px; }
+
+.u-grow { flex: 1 1 auto; min-width: 0; }
+.u-shrink-0 { flex: 0 0 auto; }
+
+.u-mt-4  { margin-top: 4px; }
+.u-mt-8  { margin-top: 8px; }
+.u-mt-12 { margin-top: 12px; }
+.u-mt-16 { margin-top: 16px; }
+.u-mt-24 { margin-top: 24px; }
+
+.u-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.u-tap {
+  transition: transform var(--d-fast) var(--ease-out),
+              opacity var(--d-fast) var(--ease-out);
+}
+
+.u-tap:active {
+  transform: scale(0.972);
+  opacity: 0.86;
+}
+
+.u-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Motion primitives
+   -------------------------------------------------------------------------- */
+@keyframes tf-rise {
+  from { opacity: 0; transform: translate3d(0, 14px, 0); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes tf-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes tf-pop {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes tf-sheet-in {
+  from { transform: translate3d(0, 100%, 0); }
+  to   { transform: none; }
+}
+
+@keyframes tf-shimmer {
+  from { background-position: -180% 0; }
+  to   { background-position: 180% 0; }
+}
+
+.anim-rise {
+  animation: tf-rise var(--d-slow) var(--ease-out) both;
+}
+
+.anim-fade {
+  animation: tf-fade var(--d-mid) var(--ease-out) both;
+}
+
+.anim-pop {
+  animation: tf-pop var(--d-mid) var(--ease-out) both;
+}
+
+/* stagger helper: children rise in sequence */
+.stagger > * {
+  animation: tf-rise 320ms var(--ease-out) both;
+}
+.stagger > *:nth-child(1) { animation-delay: 20ms; }
+.stagger > *:nth-child(2) { animation-delay: 55ms; }
+.stagger > *:nth-child(3) { animation-delay: 90ms; }
+.stagger > *:nth-child(4) { animation-delay: 125ms; }
+.stagger > *:nth-child(5) { animation-delay: 160ms; }
+.stagger > *:nth-child(6) { animation-delay: 195ms; }
+.stagger > *:nth-child(7) { animation-delay: 230ms; }
+.stagger > *:nth-child(8) { animation-delay: 265ms; }
+/* children past the 8th share the max delay — without this they'd get
+   delay 0 and pop in BEFORE the cities above them (out of sync) */
+.stagger > *:nth-child(n+9) { animation-delay: 265ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* scrollbars — subtle on desktop, invisible on touch */
+.scroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--sand-4) transparent;
+}
+
+.scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+  background: var(--sand-3);
+  border-radius: 3px;
+}
+
+.scroll::-webkit-scrollbar-track {
+  background: transparent;
+}

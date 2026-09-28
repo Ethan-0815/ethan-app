@@ -1,0 +1,161 @@
+/* ==========================================================================
+   我的空间 · 基础层
+   设计令牌 / 主题（浅色为主，深色可读）/ 排版与可读性
+   原则：看得清比装饰性更重要。正文足够大、对比度足够、长文本必然换行。
+   ========================================================================== */
+
+:root {
+  /* 颜色 · 浅色 */
+  --bg: #f6f7f9;
+  --bg-grad: radial-gradient(120% 80% at 50% 0%, #ffffff 0%, #f4f6f9 60%, #eef1f5 100%);
+  --surface: #ffffff;
+  --surface-2: #f2f4f7;
+  --surface-3: #e9edf2;
+  --text: #0f1216;
+  --text-2: #59616e;
+  --text-3: #8b93a0;
+  --line: rgba(15, 18, 22, 0.07);
+  --line-strong: rgba(15, 18, 22, 0.12);
+  --accent: #6b8bc9;
+  --accent-text: #ffffff;
+  --accent-soft: rgba(107, 139, 201, 0.11);
+  --danger: #e04347;
+  --danger-soft: rgba(224, 67, 71, 0.1);
+
+  /* 阴影 */
+  --shadow-1: 0 1px 2px rgba(16, 24, 40, 0.05), 0 1px 3px rgba(16, 24, 40, 0.04);
+  --shadow-2: 0 6px 24px rgba(16, 24, 40, 0.08), 0 1px 2px rgba(16, 24, 40, 0.04);
+  --shadow-3: 0 16px 44px rgba(16, 24, 40, 0.16);
+
+  /* 毛玻璃 */
+  --glass: rgba(255, 255, 255, 0.92);
+  --glass-bar: rgba(255, 255, 255, 0.6);
+  --glass-solid: rgba(255, 255, 255, 0.97);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-hair: rgba(15, 18, 22, 0.06);
+  --blur: 22px;
+
+  /* 形状与间距 */
+  --r-xs: 8px;
+  --r-sm: 12px;
+  --r-md: 16px;
+  --r-lg: 22px;
+  --r-xl: 28px;
+  --r-pill: 999px;
+  --pad: 16px;
+  --nav-h: 64px;
+
+  /* 字号 */
+  --fs-body: 15.5px;
+  --fs-small: 13px;
+  --fs-mini: 12px;
+  --fs-title: 26px;
+  --fs-h2: 17px;
+
+  color-scheme: light;
+}
+
+html[data-theme='dark'] {
+  --bg: #0f1113;
+  --bg-grad: radial-gradient(120% 80% at 50% 0%, #171a1e 0%, #101215 55%, #0c0e10 100%);
+  --surface: #181b1f;
+  --surface-2: #1f2328;
+  --surface-3: #262b31;
+  --text: #e9ecf0;
+  --text-2: #a3aab5;
+  --text-3: #7d858f;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.16);
+  --accent: #8facd8;
+  --accent-text: #0b1220;
+  --accent-soft: rgba(143, 172, 216, 0.16);
+  --danger: #ff7175;
+  --danger-soft: rgba(255, 113, 117, 0.16);
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-2: 0 8px 28px rgba(0, 0, 0, 0.5);
+  --shadow-3: 0 18px 48px rgba(0, 0, 0, 0.6);
+
+  --glass: rgba(40, 45, 52, 0.9);
+  --glass-bar: rgba(28, 32, 37, 0.62);
+  --glass-solid: rgba(32, 36, 41, 0.96);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-hair: rgba(255, 255, 255, 0.07);
+
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+    'Noto Sans SC', 'Microsoft YaHei', 'Source Han Sans SC', Roboto, system-ui, sans-serif;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  background-image: var(--bg-grad);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+body, button, input, textarea, select {
+  font-family: inherit;
+}
+
+/* 正文与长文本：必然换行，绝不溢出 */
+p, div, span, strong, label { overflow-wrap: anywhere; }
+
+h1, h2, h3 {
+  margin: 0;
+  font-weight: 650;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+button {
+  font-size: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+input, textarea, select { color: inherit; }
+
+a { color: var(--accent); text-decoration: none; }
+
+::selection { background: var(--accent-soft); }
+
+/* 滚动条：移动端保持干净 */
+.page::-webkit-scrollbar,
+.gallery::-webkit-scrollbar,
+.viewer__slides::-webkit-scrollbar,
+.sheet__content::-webkit-scrollbar { width: 0; height: 0; }
+
+/* 图标 */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  line-height: 0;
+}
+.icon svg { display: block; }
+
+/* 减少动态效果：CSS 侧同步降级 */
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+}

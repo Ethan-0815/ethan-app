@@ -1,0 +1,48 @@
+# ===== ETHAN Super App · GitHub 发布 .gitignore =====
+
+# ---- 依赖 / 第三方库 ----
+node_modules/
+tools/_pylibs/
+
+# ---- 构建产物（正式 APK 请通过 GitHub Releases 发布，不入源码仓库）----
+dist/
+android/build/
+*.apk
+*.aab
+*.idsig
+
+# ---- 签名与密钥（绝不提交）----
+android/keystore/
+*.jks
+*.keystore
+*.pem
+*.key
+*.p12
+*.pfx
+
+# ---- 环境与本地配置 ----
+.env
+.env.*
+local.properties
+
+# ---- 日志 / 临时 / 缓存 ----
+*.log
+.cache/
+.tmp/
+tmp/
+
+# ---- 测试覆盖率 ----
+coverage/
+
+# ---- Python ----
+__pycache__/
+*.pyc
+
+# ---- IDE / 编辑器 ----
+.idea/
+.vscode/
+*.iml
+
+# ---- 操作系统 ----
+.DS_Store
+Thumbs.db

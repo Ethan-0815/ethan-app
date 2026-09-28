@@ -1,0 +1,68 @@
+{
+  "scannedFiles": 16,
+  "findings": [
+    {
+      "file": "app/js/ui/backup.js",
+      "line": 17,
+      "level": "P2",
+      "rule": "innerhtml-secret-risk",
+      "desc": "敏感值直接拼进 innerHTML（需确认已转义）",
+      "context": "body.innerHTML ="
+    },
+    {
+      "file": "app/js/ui/backup.js",
+      "line": 33,
+      "level": "P2",
+      "rule": "innerhtml-secret-risk",
+      "desc": "敏感值直接拼进 innerHTML（需确认已转义）",
+      "context": "eye.innerHTML = I.svg(t === 'password' ? 'eye' : 'eyeOff', 17);"
+    },
+    {
+      "file": "app/js/ui/backup.js",
+      "line": 80,
+      "level": "P2",
+      "rule": "innerhtml-secret-risk",
+      "desc": "敏感值直接拼进 innerHTML（需确认已转义）",
+      "context": "body.innerHTML ="
+    },
+    {
+      "file": "app/js/ui/backup.js",
+      "line": 113,
+      "level": "P2",
+      "rule": "innerhtml-secret-risk",
+      "desc": "敏感值直接拼进 innerHTML（需确认已转义）",
+      "context": "eye.innerHTML = I.svg(pwd.type === 'password' ? 'eye' : 'eyeOff', 17);"
+    },
+    {
+      "file": "app/js/ui/item.js",
+      "line": 406,
+      "level": "P2",
+      "rule": "innerhtml-secret-risk",
+      "desc": "敏感值直接拼进 innerHTML（需确认已转义）",
+      "context": "pwEye.innerHTML = I.svg(pw.type === 'password' ? 'eye' : 'eyeOff', 17);"
+    },
+    {
+      "file": "app/js/ui/item.js",
+      "line": 436,
+      "level": "P2",
+      "rule": "innerhtml-secret-risk",
+      "desc": "敏感值直接拼进 innerHTML（需确认已转义）",
+      "context": "valEye.innerHTML = I.svg(valInp.type === 'password' ? 'eye' : 'eyeOff', 17);"
+    },
+    {
+      "file": "app/js/ui/item.js",
+      "line": 492,
+      "level": "P2",
+      "rule": "innerhtml-secret-risk",
+      "desc": "敏感值直接拼进 innerHTML（需确认已转义）",
+      "context": "fieldsBox.innerHTML = item.fields.map(function (f, i) {"
+    }
+  ],
+  "good": {
+    "aes-gcm": 3,
+    "pbkdf2": 2,
+    "getrandomvalues": 2,
+    "random-iv": 1
+  },
+  "p0Count": 0
+}
